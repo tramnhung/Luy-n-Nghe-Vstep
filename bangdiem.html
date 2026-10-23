@@ -1,44 +1,53 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>html{color-scheme:light}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Bảng điểm — Nghe 1 Part 1</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: one 760px column — sticky lab bar on top, numbered question slips below. */
+/* Bảng màu: Xanh Navy #16255A (30%) · Cam San Hô #FF6B5B (10%) · Trắng (60%).
+   Cam chỉ dùng cho âm thanh — nút đang phát, thanh tiến độ, vạch câu đang nghe.
+   Chữ trên nền cam luôn là navy (5,3:1), không bao giờ là trắng (2,9:1 — trượt ngưỡng). */
 :root{
-  --paper:#EEF1F7; --surface:#FFFFFF; --surface-2:#F6F8FC;
-  --ink:#141A2E; --ink-soft:#545D78; --ink-faint:#8A93AB;
-  --line:#DCE2EE; --line-strong:#BFC8DB;
-  --accent:#22306E; --accent-ink:#FFFFFF; --accent-soft:#E4E9F7;
-  --live:#C85A17; --live-soft:#FBEBDD;
+  --brand:#16255A;
+  --paper:#FFFFFF; --surface:#FFFFFF; --surface-2:#F3F6FC;
+  --ink:#101B3D; --ink-soft:#4C5A7C; --ink-faint:#8691AB;
+  --line:#E0E6F2; --line-strong:#C4CDE0;
+  --accent:#16255A; --accent-ink:#FFFFFF; --accent-soft:#E7ECF9;
+  --live:#FF6B5B; --live-ink:#16255A; --live-soft:#FFEDEA;
   --ok:#1C7A4E; --ok-soft:#DFF2E8;
   --no:#B02A22; --no-soft:#FBE5E3;
-  --glow:rgba(34,48,110,.13);
-  --shadow:0 1px 2px rgba(20,26,46,.05), 0 10px 30px -18px rgba(20,26,46,.45);
-  --display:'Lora', Georgia, 'Times New Roman', serif;
+  --wash:#EEF3FC;
+  --glow:rgba(22,37,90,.13);
+  --shadow:0 1px 2px rgba(16,27,61,.05), 0 10px 30px -18px rgba(16,27,61,.45);
+  --display:'Montserrat', system-ui, 'Segoe UI', sans-serif;
   --body:'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono:'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --paper:#0D1020; --surface:#161B2E; --surface-2:#1D2338;
-  --ink:#E9ECF5; --ink-soft:#A2AAC2; --ink-faint:#7A8299;
-  --line:#293048; --line-strong:#3B4460;
-  --accent:#A3B6FF; --accent-ink:#0D1020; --accent-soft:#1D2544;
-  --live:#F09A52; --live-soft:#33240F;
-  --ok:#5FD39A; --ok-soft:#132C21;
-  --no:#F0908A; --no-soft:#2F1A19;
-  --glow:rgba(163,182,255,.10);
+  --brand:#0D1734;
+  --paper:#0A1229; --surface:#121C3C; --surface-2:#19244A;
+  --ink:#E7ECF8; --ink-soft:#9EAAC7; --ink-faint:#76829F;
+  --line:#243054; --line-strong:#36446D;
+  --accent:#9DB3FF; --accent-ink:#0A1229; --accent-soft:#1B2750;
+  --live:#FF8A7A; --live-ink:#2A0F0A; --live-soft:#38201C;
+  --ok:#5FD39A; --ok-soft:#102C20;
+  --no:#F0908A; --no-soft:#331A18;
+  --wash:#0E1833;
+  --glow:rgba(157,179,255,.10);
   --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 30px -18px rgba(0,0,0,.9);
   color-scheme:dark;
 }}
 :root[data-theme="dark"]{
-  --paper:#0D1020; --surface:#161B2E; --surface-2:#1D2338;
-  --ink:#E9ECF5; --ink-soft:#A2AAC2; --ink-faint:#7A8299;
-  --line:#293048; --line-strong:#3B4460;
-  --accent:#A3B6FF; --accent-ink:#0D1020; --accent-soft:#1D2544;
-  --live:#F09A52; --live-soft:#33240F;
-  --ok:#5FD39A; --ok-soft:#132C21;
-  --no:#F0908A; --no-soft:#2F1A19;
-  --glow:rgba(163,182,255,.10);
+  --brand:#0D1734;
+  --paper:#0A1229; --surface:#121C3C; --surface-2:#19244A;
+  --ink:#E7ECF8; --ink-soft:#9EAAC7; --ink-faint:#76829F;
+  --line:#243054; --line-strong:#36446D;
+  --accent:#9DB3FF; --accent-ink:#0A1229; --accent-soft:#1B2750;
+  --live:#FF8A7A; --live-ink:#2A0F0A; --live-soft:#38201C;
+  --ok:#5FD39A; --ok-soft:#102C20;
+  --no:#F0908A; --no-soft:#331A18;
+  --wash:#0E1833;
+  --glow:rgba(157,179,255,.10);
   --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 30px -18px rgba(0,0,0,.9);
   color-scheme:dark;
 }
@@ -47,13 +56,13 @@
 [hidden]{display:none!important}
 body{
   background:
-    radial-gradient(1200px 560px at 50% -14%, var(--glow), transparent 68%),
+    linear-gradient(180deg, var(--wash) 0, transparent 460px),
     var(--paper);
-  background-attachment:fixed;
+  background-repeat:no-repeat;
   color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.6;
   -webkit-font-smoothing:antialiased;
 }
-body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--surface)}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:30; background:var(--brand)}
 h1,h2,h3,h4{font-family:var(--display); font-weight:600; text-wrap:balance; margin:0; line-height:1.18; letter-spacing:-.012em}
 p{margin:0}
 button{font:inherit; color:inherit; cursor:pointer; border:0; background:none}
@@ -62,14 +71,20 @@ button{font:inherit; color:inherit; cursor:pointer; border:0; background:none}
 .wrap{max-width:760px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px))}
 
 /* ---- top bar ---- */
-.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:var(--surface); border-bottom:1px solid var(--line)}
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:20; background:var(--brand); border-bottom:0}
+.bar .mark b{color:#fff}
+.bar .mark span{color:rgba(255,255,255,.60)}
+.bar .chip{color:rgba(255,255,255,.82); border-color:rgba(255,255,255,.28)}
+.bar .chip.on{background:var(--live); border-color:var(--live); color:var(--live-ink)}
+.bar .btn{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.30); color:#fff}
+.bar .btn:hover{background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.5)}
 .bar-in{display:flex; align-items:center; gap:12px; padding-block:10px; min-height:56px}
 .mark{display:flex; align-items:baseline; gap:9px; min-width:0}
 .mark b{font-family:var(--display); font-size:19px; font-weight:700; letter-spacing:-.01em; white-space:nowrap}
 .mark span{font-family:var(--mono); font-size:11px; color:var(--ink-faint); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap}
 .bar-right{margin-left:auto; display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end}
 .chip{font-family:var(--mono); font-size:12px; padding:4px 9px; border:1px solid var(--line); border-radius:999px; color:var(--ink-soft); white-space:nowrap}
-.chip.on{color:var(--live); border-color:var(--live); background:var(--live-soft)}
+.chip.on{color:var(--live-ink); border-color:var(--live); background:var(--live)}
 
 /* ---- buttons ---- */
 .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 20px; border-radius:10px; font-weight:600; font-size:15px; border:1px solid var(--line-strong); background:var(--surface); transition:background .14s, border-color .14s, transform .08s}
@@ -119,7 +134,7 @@ select{padding:7px 10px; border:1px solid var(--line-strong); border-radius:6px;
 .play-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:12px clamp(16px,3.4vw,24px) 0}
 .play{display:inline-flex; align-items:center; gap:9px; padding:10px 18px 10px 14px; border-radius:999px; border:1px solid transparent; color:var(--accent-ink); font-weight:600; font-size:14.5px; background:var(--accent); box-shadow:0 2px 8px -3px var(--glow); transition:filter .14s, background .14s}
 .play:hover{filter:brightness(1.12)}
-.play.on{background:var(--live); color:#fff}
+.play.on{background:var(--live); color:var(--live-ink)}
 .play svg{flex:none}
 .plays{font-family:var(--mono); font-size:12px; color:var(--ink-faint); white-space:nowrap}
 .prog{flex:1 1 80px; min-width:50px; height:4px; border-radius:2px; background:var(--line); overflow:hidden}
