@@ -392,23 +392,26 @@ function toast(msg){
 }
 
 /* ========== BĂNG NGHE ==========
-   Một file mp3 gốc (Phần 1 – Test 01), mỗi câu là một đoạn cắt theo mốc thời gian.
-   Mốc đo từ chính file: khoảng lặng giữa các câu + kiểm tra cao độ giọng đọc.      */
+   Mỗi câu là MỘT file mp3 riêng, phát từ đầu đến hết — không tua trong file lớn.
+   File gốc là VBR, trình duyệt tua trong VBR bị lệch vài giây nên cắt sẵn từng file.
+   Chỉ số 0 = phần hướng dẫn, 1..8 = tám câu.                                      */
 const OFFLINE_ROLE = "student";   /* bản offline đổi thành "student" / "teacher" */
-const AUDIO_SRC = "media/part1-test01.mp3";
-const CLIPS = [[96.40,127.50],[129.30,169.30],[171.40,206.90],[210.20,244.60],
-               [247.00,278.70],[281.70,308.70],[311.20,335.90],[336.90,361.30]];
-const INTRO_CLIP = [0.30,40.60];
+const AUDIO_SRCS = [
+  "media/00-huong-dan.mp3",
+  "media/01-cau-1.mp3", "media/02-cau-2.mp3", "media/03-cau-3.mp3", "media/04-cau-4.mp3",
+  "media/05-cau-5.mp3", "media/06-cau-6.mp3", "media/07-cau-7.mp3", "media/08-cau-8.mp3"
+];
 
-const AU = { el:null, timer:null, rate:1, failed:false, active:null };
+const AU = { cache:{}, cur:null, timer:null, rate:1, failed:false, active:null };
 
-function audio(){
-  if(AU.el) return AU.el;
-  const a = new Audio(AUDIO_SRC);
-  a.preload = "auto";
-  a.addEventListener("error", ()=>{ AU.failed = true; audioWarn(); });
-  a.addEventListener("ended", ()=> stopAudio());
-  AU.el = a;
+function audio(idx){
+  let a = AU.cache[idx];
+  if(!a){
+    a = new Audio(AUDIO_SRCS[idx]);
+    a.preload = "metadata";
+    a.addEventListener("error", ()=>{ AU.failed = true; audioWarn(); });
+    AU.cache[idx] = a;
+  }
   return a;
 }
 function audioWarn(){
@@ -420,22 +423,23 @@ function audioWarn(){
 }
 
 function stopAudio(){
-  if(AU.el) AU.el.pause();
+  if(AU.cur){ try{ AU.cur.pause(); AU.cur.currentTime = 0; }catch(e){} }
   try{ speechSynthesis.cancel(); }catch(e){}
   clearInterval(AU.timer); AU.timer = null;
   const A = AU.active;
   if(A){
+    if(A.off) A.off();
     if(A.btn){ A.btn.classList.remove("on"); A.btn.querySelector("span").textContent = A.label(); }
     if(A.bar) A.bar.style.width = "0%";
     const c = A.card && document.getElementById(A.card);
     if(c) c.classList.remove("playing");
   }
-  AU.active = null;
+  AU.active = null; AU.cur = null;
   $("#statusChip").hidden = true;
 }
 
-/* Phát một đoạn [start,end]. ui = {btn, bar, card, label, chip} */
-function playClip(clip, ui, fallbackText){
+/* Phát trọn một file. ui = {key, btn, bar, card, label, chip} */
+function playClip(idx, ui, fallbackText){
   stopAudio();
   AU.active = ui;
   if(ui.btn){ ui.btn.classList.add("on"); ui.btn.querySelector("span").textContent = "Đang phát…"; }
@@ -445,22 +449,23 @@ function playClip(clip, ui, fallbackText){
 
   if(AU.failed) return speakFallback(fallbackText);
 
-  const a = audio();
+  const a = audio(idx);
+  AU.cur = a;
   a.playbackRate = AU.rate;
-  const [s,e] = clip;
-  const go = () => {
-    try{ a.currentTime = s; }catch(err){}
-    const p = a.play();
-    if(p && p.catch) p.catch(()=>{ AU.failed = true; audioWarn(); if(AU.active===ui) speakFallback(fallbackText); });
-    AU.timer = setInterval(()=>{
-      if(AU.active !== ui) return;
-      const t = a.currentTime;
-      if(t >= e - 0.02){ stopAudio(); return; }
-      if(ui.bar) ui.bar.style.width = Math.max(0, Math.min(100,(t-s)/(e-s)*100)) + "%";
-    }, 90);
-  };
-  if(a.readyState >= 1) go();
-  else a.addEventListener("loadedmetadata", go, {once:true});
+  try{ a.currentTime = 0; }catch(err){}
+
+  const onEnd = () => { if(AU.active === ui) stopAudio(); };
+  a.addEventListener("ended", onEnd);
+  ui.off = () => a.removeEventListener("ended", onEnd);
+
+  const p = a.play();
+  if(p && p.catch) p.catch(()=>{ AU.failed = true; audioWarn(); if(AU.active === ui) speakFallback(fallbackText); });
+
+  AU.timer = setInterval(()=>{
+    if(AU.active !== ui) return;
+    const d = a.duration;
+    if(ui.bar && d) ui.bar.style.width = Math.min(100, a.currentTime / d * 100) + "%";
+  }, 120);
 }
 
 /* Dự phòng khi file nghe không tải được */
@@ -484,7 +489,7 @@ function playQ(i){
     const p = document.getElementById("plays"+i);
     if(p) p.textContent = "đã nghe " + S.plays[i] + " lần";
   }
-  playClip(CLIPS[i], {
+  playClip(i + 1, {
     key:"q"+i, card:"q"+i,
     btn: document.getElementById("play"+i),
     bar: document.querySelector("#bar"+i+" i"),
@@ -594,7 +599,7 @@ function buildReview(){
     const bar = el("div","prog"); bar.id = "rbar"+i; bar.appendChild(el("i"));
     btn.onclick = ()=>{
       if(AU.active && AU.active.key === "r"+i){ stopAudio(); return; }
-      playClip(CLIPS[i], {
+      playClip(i + 1, {
         key:"r"+i, card:null, btn, bar: bar.querySelector("i"),
         chip:"Đang phát đoạn " + (i+1),
         label: () => "Nghe lại đoạn " + (i+1)
@@ -760,15 +765,15 @@ $("#beginBtn").onclick = ()=>{
   $("#whoami").textContent = name + " · " + id;
   $("#start").hidden = true; $("#test").hidden = false;
   buildQuestions(); updateProgress();
-  audio();
+  audio(1).preload = "auto";
   window.scrollTo({top:0});
 };
-$("#rateSel").onchange = e => { AU.rate = +e.target.value; if(AU.el) AU.el.playbackRate = AU.rate; };
+$("#rateSel").onchange = e => { AU.rate = +e.target.value; if(AU.cur) AU.cur.playbackRate = AU.rate; };
 $("#stopBtn").onclick = stopAudio;
 $("#introBtn").onclick = ()=>{
   if(AU.active && AU.active.key === "intro"){ stopAudio(); return; }
   const b = $("#introBtn"); const old = b.textContent;
-  playClip(INTRO_CLIP, {
+  playClip(0, {
     key:"intro", card:null, btn:null, bar:null,
     chip:"Đang phát phần hướng dẫn", label:()=>old
   }, INTRO);
@@ -852,6 +857,6 @@ if(OFFLINE_ROLE === "teacher"){
   if(/^#bangdiem$/i.test(location.hash)) showTeacher(true);
 }
 
-addEventListener("beforeunload", ()=>{ try{ if(AU.el) AU.el.pause(); speechSynthesis.cancel(); }catch(e){} });
+addEventListener("beforeunload", ()=>{ try{ if(AU.cur) AU.cur.pause(); speechSynthesis.cancel(); }catch(e){} });
 </script>
 </body></html>
