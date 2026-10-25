@@ -333,7 +333,7 @@ const QS = [
  {q:"Which part(s) of England will have the heaviest rainfall?",
   o:["London and south-east","Northern","Western and Central","mainland Britain"], a:2,
   s:"And now for tomorrow's weather. Partly cloudy in the morning for London and the south-east, but overcast by midday with rain in the afternoon. Temperatures will range from 11 to 19 degrees Celsius. There'll also be rain in the north, which will quickly spread to the rest of the country. Rain will be very heavy in some areas by late afternoon, especially in western and central England, and there will be strong winds over most of mainland Britain.",
-  k:"Rain will be very heavy in some areas by late afternoon, especially in western and central England.",
+  k:"Rain will be very heavy in some areas by late afternoon, especially in western and central England",
   w:"Mưa sẽ nặng hạt ở một số nơi vào chiều muộn, đặc biệt là ở phía Tây và vùng trung tâm nước Anh."},
 
  {q:"What should you do in case of losing money?",
@@ -345,7 +345,7 @@ const QS = [
  {q:"Why can't she be at the meeting?",
   o:["Her flight was delayed.","She is feeling unwell.","Her car has broken down.","Her train was delayed."], a:2,
   s:"Erm... yeah, hello, yes, it's me. Look, I know I'm supposed to be in the meeting now but something's come up. I feel dreadful about it, but... Oh, what a day this has been! First my train was delayed for half an hour, then... er... Anyway, I could still have got there, but would you believe it, my engine's packed in and I'm stranded here next to the motorway until the breakdown service turns up. I'm so sorry.",
-  k:"My engine's packed in and I'm stranded here next to the motorway until the breakdown service turns up.",
+  k:"my engine's packed in and I'm stranded here next to the motorway until the breakdown service turns up",
   w:"Động cơ xe bị hỏng nên cô ấy mắc kẹt cạnh đường cao tốc chờ xe cứu hộ. Tàu trễ 30 phút (D) chỉ là chuyện xảy ra trước đó, cô ấy nói vẫn kịp đến."},
 
  {q:"What was stolen in the burglary?",
@@ -633,10 +633,20 @@ function buildReview(){
 }
 
 function esc(s){ return s.replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+/* Tô đậm câu chốt trong transcript. Bỏ qua khác biệt hoa/thường và dấu câu ở
+   cuối mảnh, rồi chèn từ cuối lên đầu để các vị trí tìm được không bị xê dịch. */
 function highlight(text, key){
-  const parts = key.split("...").map(p=>p.trim()).filter(Boolean);
+  const parts = key.split("...").map(p=>p.trim().replace(/[.,;:!?]+$/,"")).filter(Boolean);
   let out = esc(text);
-  parts.forEach(p=>{ const e = esc(p); const at = out.indexOf(e); if(at>=0) out = out.slice(0,at) + "<mark>" + e + "</mark>" + out.slice(at+e.length); });
+  const low = out.toLowerCase();
+  const hits = [];
+  parts.forEach(p=>{
+    const e = esc(p);
+    const at = low.indexOf(e.toLowerCase());
+    if(at >= 0) hits.push([at, at + e.length]);
+  });
+  hits.sort((a,b)=> b[0]-a[0]);
+  hits.forEach(([a,b])=>{ out = out.slice(0,a) + "<mark>" + out.slice(a,b) + "</mark>" + out.slice(b); });
   return out;
 }
 
