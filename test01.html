@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Luyện nghe VSTEP — Test 01</title>
+<meta name="description" content="Luyện nghe VSTEP Test 01: Part 1, Part 2, Part 3 — nghe, làm bài, chấm điểm, xem đáp án, transcript và giải thích tiếng Việt.">
+<style>html{color-scheme:light}body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap">
+<style>
+/* Layout: one reading column; sticky part-switcher; audio card on top of each part, then questions, then transcript drawer. */
+:root{
+  --bg:#f4f6f8;
+  --surface:#ffffff;
+  --surface-2:#eef2f6;
+  --ink:#15202b;
+  --muted:#5b6a79;
+  --line:#dbe3ea;
+  --accent:#1a5a96;
+  --accent-soft:#e4eef7;
+  --good:#166b4a;
+  --good-soft:#e2f2ea;
+  --bad:#a93226;
+  --bad-soft:#fae9e7;
+  --amber:#8a5a00;
+  --amber-soft:#fbf0d9;
+  --font-display:"Lora",Georgia,"Times New Roman",serif;
+  --font-body:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,sans-serif;
+  --radius:12px;
+  --shadow:0 1px 2px rgba(21,32,43,.06),0 8px 24px -16px rgba(21,32,43,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f151b;
+    --surface:#17202a;
+    --surface-2:#1e2935;
+    --ink:#e7edf3;
+    --muted:#9aaab9;
+    --line:#2a3744;
+    --accent:#6fa9e2;
+    --accent-soft:#1b2c3e;
+    --good:#6fcfa3;
+    --good-soft:#153025;
+    --bad:#f0938a;
+    --bad-soft:#39201d;
+    --amber:#e3b45f;
+    --amber-soft:#332a16;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f151b;
+  --surface:#17202a;
+  --surface-2:#1e2935;
+  --ink:#e7edf3;
+  --muted:#9aaab9;
+  --line:#2a3744;
+  --accent:#6fa9e2;
+  --accent-soft:#1b2c3e;
+  --good:#6fcfa3;
+  --good-soft:#153025;
+  --bad:#f0938a;
+  --bad-soft:#39201d;
+  --amber:#e3b45f;
+  --amber-soft:#332a16;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{
+  max-width:860px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+/* ---------- header ---------- */
+.masthead{background:var(--surface);border-bottom:1px solid var(--line)}
+.masthead .wrap{padding-block:28px 22px}
+.eyebrow{
+  font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 8px;
+}
+h1{
+  font-family:var(--font-display);font-weight:600;font-size:clamp(26px,5vw,36px);
+  line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em;
+}
+.lede{color:var(--muted);margin:10px 0 0;max-width:62ch;font-size:14.5px}
+/* ---------- tabs ---------- */
+.tabbar{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:9;
+  background:var(--surface);border-bottom:1px solid var(--line);
+}
+.tabbar .wrap{display:flex;gap:4px;overflow-x:auto;padding-block:0;scrollbar-width:none}
+.tabbar .wrap::-webkit-scrollbar{display:none}
+.tab{
+  appearance:none;background:none;border:0;border-bottom:2.5px solid transparent;
+  font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);
+  padding:14px 12px 11px;cursor:pointer;white-space:nowrap;display:flex;gap:8px;align-items:baseline;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.tab .cnt{font-size:11.5px;font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:4px}
+/* ---------- panel ---------- */
+.panel .wrap{padding-block:26px 56px;display:flex;flex-direction:column;gap:22px}
+.part-head{display:flex;flex-direction:column;gap:6px}
+h2{font-family:var(--font-display);font-size:22px;font-weight:600;margin:0;letter-spacing:-.01em}
+.part-sub{color:var(--muted);font-size:13.5px;margin:0}
+/* ---------- audio card ---------- */
+.player{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:14px;
+}
+.player-top{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;justify-content:space-between}
+.player-label{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.dur{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+audio{width:100%;display:block}
+.speeds{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.speeds .cap{font-size:12.5px;color:var(--muted);margin-right:2px}
+.chip{
+  appearance:none;font-family:inherit;font-size:12.5px;font-weight:600;
+  background:var(--surface-2);color:var(--ink);border:1px solid var(--line);
+  border-radius:999px;padding:5px 12px;cursor:pointer;font-variant-numeric:tabular-nums;
+}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* ---------- questions ---------- */
+.qlist{display:flex;flex-direction:column;gap:14px}
+.q{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px 18px;display:flex;flex-direction:column;gap:12px;
+}
+.q.is-right{border-left:3px solid var(--good)}
+.q.is-wrong{border-left:3px solid var(--bad)}
+.qhead{display:flex;gap:10px;align-items:flex-start}
+.qnum{
+  flex:none;width:24px;height:24px;border-radius:6px;background:var(--accent-soft);color:var(--accent);
+  font-size:12.5px;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums;margin-top:1px;
+}
+.qtext{margin:0;font-weight:600;font-size:15px;line-height:1.45;min-width:0}
+.opts{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;border:0}
+.opt{
+  display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;
+  cursor:pointer;border:1px solid transparent;min-width:0;
+}
+.opt:hover{background:var(--surface-2)}
+.opt input{margin:3px 0 0;accent-color:var(--accent);flex:none}
+.opt .letter{font-weight:700;flex:none;width:17px;color:var(--muted);font-size:14px}
+.opt .body{min-width:0}
+.opt.mark-correct{background:var(--good-soft);border-color:var(--good)}
+.opt.mark-correct .letter{color:var(--good)}
+.opt.mark-chosen-wrong{background:var(--bad-soft);border-color:var(--bad)}
+.opt.mark-chosen-wrong .letter{color:var(--bad)}
+.graded .opt{cursor:default}
+.graded .opt:hover{background:none}
+.graded .opt.mark-correct:hover{background:var(--good-soft)}
+.graded .opt.mark-chosen-wrong:hover{background:var(--bad-soft)}
+/* ---------- explanation ---------- */
+.exp{
+  background:var(--surface-2);border-radius:10px;padding:13px 15px;
+  display:flex;flex-direction:column;gap:8px;font-size:14px;
+}
+.exp .tagline{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+.exp blockquote{
+  margin:0;padding-left:12px;border-left:2px solid var(--accent);
+  font-family:var(--font-display);font-style:italic;font-size:14.5px;line-height:1.5;
+}
+.exp .vi{margin:0;color:var(--muted)}
+.exp .why{margin:0}
+.flag{
+  background:var(--amber-soft);border:1px solid var(--amber);border-radius:10px;
+  padding:12px 14px;font-size:13.5px;display:flex;flex-direction:column;gap:5px;
+}
+.flag strong{color:var(--amber)}
+/* ---------- actions / score ---------- */
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{
+  appearance:none;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  border-radius:9px;padding:10px 18px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.08);color:#fff}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.progress{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;margin-left:auto}
+.score{
+  border-radius:var(--radius);padding:16px 18px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;
+  background:var(--accent-soft);border:1px solid var(--accent);
+}
+.score .big{font-family:var(--font-display);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+.score .msg{color:var(--muted);font-size:13.5px}
+/* ---------- drawers ---------- */
+details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+summary{
+  cursor:pointer;padding:14px 18px;font-weight:600;font-size:14px;list-style:none;
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--accent);font-weight:700;font-size:17px;line-height:1}
+details[open] summary::after{content:"–"}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.drawer-body{padding:0 18px 18px;border-top:1px solid var(--line);padding-top:14px}
+.script p{margin:0 0 11px;font-size:14.5px;line-height:1.65}
+.script p:last-child{margin-bottom:0}
+.script .cue{font-weight:700;color:var(--accent)}
+.script .spk{font-weight:700;color:var(--accent);display:inline-block;min-width:22px}
+.script .dir{color:var(--muted);font-size:13.5px}
+.vocab{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.vocab li{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:4px 14px;font-size:14px}
+.vocab b{font-weight:600}
+.vocab span{color:var(--muted)}
+@media (max-width:460px){.vocab li{grid-template-columns:1fr;gap:1px}}
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line);background:var(--surface)}
+.foot .wrap{padding-block:20px 28px;color:var(--muted);font-size:12.5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">VSTEP B1–B2–C1 · Listening</p>
+    <h1>Luyện nghe VSTEP — Test 01</h1>
+    <p class="lede">Nghe audio, chọn đáp án, nộp bài để xem điểm. Sau khi nộp, mỗi câu có đáp án đúng, câu trích trong bài nghe và giải thích tiếng Việt. Transcript đầy đủ nằm ở cuối mỗi phần.</p>
+  </div>
+</header>
+
+<nav class="tabbar" aria-label="Chọn phần thi">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" id="tab-p1" aria-controls="panel-p1" aria-selected="true">Part 1 <span class="cnt">8 câu</span></button>
+    <button class="tab" role="tab" id="tab-p2" aria-controls="panel-p2" aria-selected="false">Part 2 <span class="cnt">3 câu</span></button>
+    <button class="tab" role="tab" id="tab-p3" aria-controls="panel-p3" aria-selected="false">Part 3 <span class="cnt">2 câu</span></button>
+  </div>
+</nav>
+
+<main id="main"></main>
+
+<footer class="foot">
+  <div class="wrap">
+    Nguồn đề, transcript và đáp án: tài liệu <i>Listening — Tài liệu ôn thi VSTEP B1, B2, C1</i> (Part 1 – Bài 1, Part 2 – Bài 1, Part 3 – Test 1). Bài làm của bạn được lưu tạm trên chính máy bạn.
+  </div>
+</footer>
+
+<script>
+const DATA = [
+  {
+    id:"p1",
+    name:"Part 1",
+    heading:"Part 1 — Bài 1: Thông báo & hướng dẫn ngắn",
+    sub:"8 mẩu thông báo độc lập, mỗi mẩu 1 câu hỏi. Nghe một lượt, không có cơ hội nghe lại trong phòng thi.",
+    audio:"media/test01/part1.mp3",
+    dur:"6:06",
+    questions:[
+      {q:"Which part(s) of England will have the heaviest rainfall?",
+       opts:["London and south-east","Northern","Western and Central","mainland Britain"],
+       ans:2,
+       quote:"Rain will be very heavy in some areas by late afternoon, especially in western and central England.",
+       vi:"Mưa sẽ rất nặng hạt ở một số nơi vào chiều muộn, đặc biệt là ở miền Tây và miền Trung nước Anh.",
+       why:"Bẫy ở đây là bài nghe nhắc tới cả London, miền Nam, miền Bắc và “mainland Britain”. Nhưng chỉ cụm <b>western and central England</b> đi kèm với <i>very heavy</i>; “mainland Britain” gắn với <i>strong winds</i> (gió mạnh), không phải mưa."},
+      {q:"What should you do in case of losing money?",
+       opts:["call the lost property office","to contact the police to make a statement","to contact your bank immediately","go to the lost property office"],
+       ans:1,
+       quote:"If you've lost valuables such as jewelry, cash or credit cards, you'll need to contact your nearest police station as soon as possible to make a statement.",
+       vi:"Nếu bạn mất đồ giá trị như trang sức, tiền mặt hay thẻ tín dụng, bạn cần liên hệ đồn cảnh sát gần nhất sớm nhất có thể để trình báo.",
+       why:"Câu hỏi hỏi về <b>mất tiền</b>. Liên hệ ngân hàng (C) chỉ áp dụng riêng cho thẻ tín dụng; đến văn phòng đồ thất lạc (D) là dành cho “any other items” — các đồ khác."},
+      {q:"Why can’t she be at the meeting?",
+       opts:["Her flight was delayed.","She is feeling unwell.","Her car has broken down.","Her train was delayed."],
+       ans:2,
+       quote:"First my train was delayed for half an hour… Anyway, I could still have got there but would you believe it my engine's packed in and I'm stranded here next to the motorway.",
+       vi:"Đầu tiên là tàu của tôi trễ nửa tiếng… Dù vậy tôi vẫn có thể tới kịp, nhưng bạn tin không, động cơ xe tôi hỏng và tôi đang mắc kẹt cạnh đường cao tốc.",
+       why:"Tàu trễ (D) có thật nhưng cô ấy nói rõ <i>“I could still have got there”</i> — vẫn kịp. Lý do thật sự nằm sau chữ <b>but</b>: <b>my engine’s packed in</b> = xe hỏng máy. Nghe VSTEP, thông tin sau <i>but / however / actually</i> thường là đáp án."},
+      {q:"What was stolen in the burglary?",
+       opts:["a painting","a statue","a famous jewel","antiques"],
+       ans:2,
+       quote:"…taking only The Lonely Wanderer by Karl van Turbeck. The 1-metre high bronze figure, which stands on a marble base, is regarded as the jewel of the Baldridge collection and is valued at over £5 million.",
+       vi:"…chỉ lấy đi bức The Lonely Wanderer của Karl van Turbeck. Tượng đồng cao 1 mét, đặt trên bệ đá cẩm thạch, được xem là viên ngọc quý của bộ sưu tập Baldridge, trị giá hơn 5 triệu bảng.",
+       why:"Đáp án theo sách là <b>C</b>, dựa vào cụm <i>the jewel of the Baldridge collection</i>. Bọn trộm bỏ qua tranh (A) và các món đồ cổ ít giá trị (D).",
+       flag:"Câu này sách ghi đáp án C, nhưng transcript mô tả vật bị lấy là <i>a 1-metre high bronze figure</i> — tức là <b>một bức tượng (B)</b>. Cụm <i>the jewel of the collection</i> chỉ là cách nói ẩn dụ “món quý nhất của bộ sưu tập”, không phải đồ trang sức. Khi dạy, nên lưu ý học viên rằng B mới là đáp án hợp lý về nghĩa; đây là lỗi đáp án của tài liệu gốc."},
+      {q:"What are the instructions about?",
+       opts:["how to change a light bulb","how to change your car’s hazard lights","what to do if your car breaks down","how to change a flat tire"],
+       ans:3,
+       quote:"Find the jack, spanner and spare — they should all be in the boot — and check the spare isn't flat, too… Then jack the car up, undo the nuts and take off the wheel.",
+       vi:"Tìm con đội, cờ lê và lốp dự phòng — tất cả đều ở cốp xe — và kiểm tra xem lốp dự phòng có bị xẹp không… Sau đó kích xe lên, tháo ốc và lấy bánh xe ra.",
+       why:"Chuỗi từ <b>jack, spanner, spare, nuts, wheel</b> chỉ dẫn tới một việc: thay lốp. Bóng đèn (A) và đèn cảnh báo (B) có xuất hiện nhưng chỉ là chi tiết phụ, không phải chủ đề."},
+      {q:"Which prizes are mentioned?",
+       opts:["A holiday and a CD player","A DVD player and a CD player","A DVD player and a holiday","A holiday and a television"],
+       ans:2,
+       quote:"Prizes include a new DVD player and a holiday.",
+       vi:"Giải thưởng gồm một đầu DVD mới và một kỳ nghỉ.",
+       why:"Câu trả lời nằm ở câu cuối của thông báo. Các phương án khác thay DVD bằng CD player hoặc television — những từ không hề xuất hiện."},
+      {q:"How much would five tickets cost?",
+       opts:["$100","$50","$20","$200"],
+       ans:0,
+       quote:"Because of the extra tickets, tickets will now be priced at the lower cost of twenty dollars.",
+       vi:"Nhờ có thêm vé, giá vé nay giảm xuống còn hai mươi đô la.",
+       why:"Bài nghe chỉ cho giá <b>1 vé = $20</b>; phải tự tính 5 × 20 = <b>$100</b>. Dạng câu hỏi tính toán này rất hay gặp ở Part 1 — nghe xong phải làm một phép tính nhỏ."},
+      {q:"If there is a fire, what should you do?",
+       opts:["Run out of the building","Stay seated","Walk out of the building","Jog out of the building"],
+       ans:2,
+       quote:"Stand up and walk towards the nearest exit. Do not run, and do not try to gather your things.",
+       vi:"Đứng dậy và đi bộ về phía lối thoát gần nhất. Không chạy, và không cố thu dọn đồ đạc.",
+       why:"<b>walk</b> được nêu trực tiếp, còn <b>do not run</b> loại luôn A và D (jog = chạy chậm)."}
+    ],
+    script:[
+      {type:"dir",text:"<b>Part 1 – Directions:</b> In this part, you will hear EIGHT short announcements or instructions. There is one question for each announcement or instruction. For each question, choose the right answer A, B, C or D. Then, on the answer sheet, find the number of the question and fill in the space that corresponds to the letter of the answer that you have chosen. We are ready to start. First you have some time to look at questions 1 to 8. Now listen carefully and answer questions 1 to 8."},
+      {type:"cue",n:"Question 1.",text:"And now for tomorrow's weather. Partly cloudy in the morning for London and the south-east but overcast by midday with rain in the afternoon. Temperatures will range from 11–19°C. There'll also be rain in the north which will quickly spread to the rest of the country. Rain will be very heavy in some areas by late afternoon, especially in western and central England, and there will be strong winds over most of mainland Britain."},
+      {type:"cue",n:"Question 2.",text:"Hello. This is the lost property office. There's no one here to take your call at present, but if you've lost something please listen carefully to the following message. If you've lost valuables such as jewelry, cash or credit cards you'll need to contact your nearest police station as soon as possible to make a statement. In the case of a credit card you should also contact your bank immediately. For any other items please call in at our office between 9am and 5pm Monday to Friday. Thank you."},
+      {type:"cue",n:"Question 3.",text:"Erm… yeah, hello, yes, it's me. Look, I know I'm supposed to be in the meeting now but something's come up. I feel dreadful about it, but — oh, what a day this has been! First my train was delayed for half an hour, then… er… Anyway, I could still have got there but would you believe it, my engine's packed in and I'm stranded here next to the motorway until the breakdown service turns up. I'm so sorry."},
+      {type:"cue",n:"Question 4.",text:"Late last night thieves broke into Mac Hannan Hall, where a collection of the late Lady Betty Baldridge's paintings, statues and antiques are on display to the public. The thieves, who disabled a sophisticated electronic security system, ignored all the less valuable paintings and pieces on display, taking only The Lonely Wanderer by Karl van Turbeck. The 1-metre high bronze figure, which stands on a marble base, is regarded as the jewel of the Baldridge collection and is valued at over £5 million."},
+      {type:"cue",n:"Question 5.",text:"This isn't terribly difficult, but if you're one of those people who won't even change a light bulb, just call a breakdown service. Anyway, make sure you're safely off the road with your hazard triangle in place at least 20 metres behind you. Find the jack, spanner and spare — they should all be in the boot — and check the spare isn't flat, too. Put the jack in place under your car, but before you begin to lift the side of the car, don't forget to loosen the nuts on the wheel. Then jack the car up, undo the nuts and take off the wheel."},
+      {type:"cue",n:"Question 6.",text:"Attention, please. We would like to remind you that next Monday at nine o'clock we will be having our yearly staff picnic. All staff and their families are invited to attend. Plenty of food and drink will be provided for everyone and we will be having our famous barbecue. We will also have our annual fun and games. Prizes include a new DVD player and a holiday."},
+      {type:"cue",n:"Question 7.",text:"Due to problems with the lighting, the concert has to be postponed until Friday the 22nd. The concert will also be moved from hall A to the larger hall C. A bigger venue means five hundred tickets will now be available — twice the original number. Because of the extra tickets, tickets will now be priced at the lower cost of twenty dollars."},
+      {type:"cue",n:"Question 8.",text:"In the event of a fire please follow these directions. Stand up and walk towards the nearest exit. Do not run, and do not try to gather your things. When outside, wait for your teacher on the football field. Next week we will have the first of our two annual fire drills. Thank you."},
+      {type:"dir",text:"This is the end of Part 1. Now turn to Part 2."}
+    ],
+    vocab:[
+      ["overcast","trời âm u, u ám (nhiều mây)"],
+      ["lost property office","văn phòng đồ thất lạc"],
+      ["make a statement","trình báo, khai báo (với cảnh sát)"],
+      ["my engine's packed in","xe tôi chết máy / hỏng động cơ (khẩu ngữ Anh)"],
+      ["be stranded","bị mắc kẹt, không đi tiếp được"],
+      ["breakdown service","dịch vụ cứu hộ xe"],
+      ["burglary","vụ trộm đột nhập"],
+      ["hazard triangle","biển tam giác cảnh báo đặt sau xe"],
+      ["jack / spanner / spare","con đội / cờ lê / lốp dự phòng"],
+      ["the boot","cốp sau xe (Anh-Anh; Mỹ dùng <i>trunk</i>)"],
+      ["a flat tire","lốp xẹp"],
+      ["venue","địa điểm tổ chức"],
+      ["be postponed","bị hoãn lại"],
+      ["fire drill","diễn tập phòng cháy"]
+    ]
+  },
+  {
+    id:"p2",
+    name:"Part 2",
+    heading:"Part 2 — Bài 1: Hội thoại về đời sống sinh viên",
+    sub:"Một đoạn hội thoại giữa hai sinh viên, 3 câu hỏi. Chú ý câu hỏi về “chủ đề” và “ý chính của người nói”.",
+    audio:"media/test01/part2.mp3",
+    dur:"0:52",
+    questions:[
+      {q:"What is the topic of the conversation?",
+       opts:["Taking measurements","Taking a break","Looking on the Internet","Finding a small MP3 player"],
+       ans:3,
+       quote:"Taking a break from studying. I'm surfing the Internet for an MP3 player. … Yes, but I need a really small one.",
+       vi:"Mình đang nghỉ giải lao giữa giờ học. Mình đang lướt mạng tìm một cái máy nghe nhạc MP3. … Có, nhưng mình cần loại thật nhỏ.",
+       why:"A, B, C đều là chi tiết có thật trong bài (đo kích thước, nghỉ giải lao, lướt mạng) nhưng chỉ là <b>phương tiện</b>. Mục đích xuyên suốt cuộc nói chuyện là <b>tìm một chiếc MP3 nhỏ gọn</b>. Câu hỏi “topic” luôn hỏi điều bao trùm cả đoạn, không phải chi tiết nghe thấy đầu tiên."},
+      {q:"What is the man's main point?",
+       opts:["The device is too small.","The device is too big.","The woman shouldn't get the device.","The device is small enough."],
+       ans:3,
+       quote:"W: Yes, but I need a really small one. — M: Oh, it's small! … It's 3.6 inches tall and two inches wide. I have one.",
+       vi:"W: Có, nhưng mình cần loại thật nhỏ. — M: Ồ, nó nhỏ mà! … Nó cao 3,6 inch và rộng 2 inch. Mình có một cái rồi.",
+       why:"Người nam đưa số đo cụ thể để <b>chứng minh máy đủ nhỏ</b> so với yêu cầu của bạn nữ. Anh ta không chê máy quá nhỏ hay quá to, cũng không khuyên cô ấy đừng mua."},
+      {q:"What does the device do?",
+       opts:["Reads books","Searches the Internet","Plays music","Solves math problems"],
+       ans:2,
+       quote:"Someone told me it holds 5,000 songs!",
+       vi:"Có người nói với mình là nó chứa được 5.000 bài hát!",
+       why:"<b>MP3 player / songs</b> → máy nghe nhạc. Internet (B) là thứ cô ấy dùng để <b>tìm mua</b> máy, còn phép tính (D) là chuyện quy đổi inch sang cm bằng máy tính bỏ túi — đều là bẫy lấy từ khoá nghe được trong bài."}
+    ],
+    script:[
+      {type:"line",spk:"M",text:"Hey Julie, what's up?"},
+      {type:"line",spk:"W",text:"Hi, Brian. Taking a break from studying. I'm surfing the Internet for an MP3 player."},
+      {type:"line",spk:"M",text:"Do you like the iPod?"},
+      {type:"line",spk:"W",text:"Yes, but I need a really small one."},
+      {type:"line",spk:"M",text:"Oh, it's small!"},
+      {type:"line",spk:"W",text:"Really? Someone told me it holds 5,000 songs!"},
+      {type:"line",spk:"M",text:"It's 3.6 inches tall and two inches wide. I have one."},
+      {type:"line",spk:"W",text:"What's that in centimetres?"},
+      {type:"line",spk:"M",text:"The math textbook says one inch is 2.54 centimetres."},
+      {type:"line",spk:"W",text:"OK, so first I need to multiply 3.6 by 2.54."},
+      {type:"line",spk:"M",text:"Here! Use my calculator."},
+      {type:"line",spk:"W",text:"Thanks! OK… it's 9.1 centimetres tall and 5 centimetres wide. Just what I need!"}
+    ],
+    vocab:[
+      ["What's up?","Có chuyện gì thế? / Dạo này sao rồi? (chào hỏi thân mật)"],
+      ["take a break","nghỉ giải lao"],
+      ["surf the Internet","lướt mạng"],
+      ["hold 5,000 songs","chứa được 5.000 bài hát"],
+      ["inches tall / wide","cao / rộng bao nhiêu inch (1 inch = 2,54 cm)"],
+      ["multiply A by B","nhân A với B"],
+      ["Just what I need!","Đúng thứ mình cần!"]
+    ]
+  },
+  {
+    id:"p3",
+    name:"Part 3",
+    heading:"Part 3 — Test 1: Bài nói về University 101",
+    sub:"Một đoạn nói/bài giảng ngắn, 2 câu hỏi. Dạng hay gặp: 1 câu hỏi ý chính + 1 câu hỏi chi tiết.",
+    audio:"media/test01/part3.mp3",
+    dur:"0:48",
+    questions:[
+      {q:"What is the talk mainly about?",
+       opts:["How to do a quick test","Going to university","Reading faster","Understanding difficult words"],
+       ans:2,
+       quote:"As we study in university, we find we have a lot of reading. It's very productive to learn how to read faster. To do this, you need to know how fast you read now.",
+       vi:"Khi học đại học, chúng ta thấy mình phải đọc rất nhiều. Học cách đọc nhanh hơn là việc rất hữu ích. Để làm được điều đó, bạn cần biết hiện tại mình đọc nhanh thế nào.",
+       why:"Ý chính nằm ngay câu thứ hai: <b>learn how to read faster</b>. “University” (B) chỉ là bối cảnh mở đầu; bài kiểm tra nhanh (A) chỉ là công cụ để đo tốc độ đọc. Ở Part 3, câu chủ đề gần như luôn nằm trong 1–2 câu đầu."},
+      {q:"What does the speaker suggest doing after reading?",
+       opts:["Reading again","Taking notes","Seeing what you can remember","Looking at the clock"],
+       ans:2,
+       quote:"When you finish, you should try to see what you remember.",
+       vi:"Khi đọc xong, bạn nên thử xem mình nhớ được những gì.",
+       why:"Từ khoá định vị là <b>when you finish</b> (= after reading). Câu này nằm ở <b>cuối</b> bài nói — với câu hỏi “after / finally”, hãy chú ý những câu cuối cùng. “Looking at the clock” (D) thuộc phần cảnh báo <i>rushing to beat the clock is pointless</i>."}
+    ],
+    script:[
+      {type:"plain",text:"As we study in university, we find we have a lot of reading. It's very productive to learn how to read faster. To do this, you need to know how fast you read now. I'll show you a quick test to find out. But before I do, let me say this. In this test, it's important to understand what you have read. Rushing to beat the clock is pointless. You won't enjoy the reading or understand it well. You'll also get a false measure of your reading speed. When you finish, you should try to see what you remember."}
+    ],
+    vocab:[
+      ["productive","hữu ích, hiệu quả"],
+      ["a quick test","một bài kiểm tra nhanh"],
+      ["rush to beat the clock","vội vã chạy đua với thời gian"],
+      ["pointless","vô ích, không có ý nghĩa gì"],
+      ["a false measure","một con số đo không chính xác"],
+      ["reading speed","tốc độ đọc"]
+    ]
+  }
+];
+
+const LETTERS = ["A","B","C","D"];
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+
+function scriptHTML(part){
+  return part.script.map(s=>{
+    if(s.type==="dir")   return `<p class="dir">${s.text}</p>`;
+    if(s.type==="cue")   return `<p><span class="cue">${s.n}</span> ${esc(s.text)}</p>`;
+    if(s.type==="line")  return `<p><span class="spk">${s.spk}</span> ${esc(s.text)}</p>`;
+    return `<p>${esc(s.text)}</p>`;
+  }).join("");
+}
+
+function panelHTML(part){
+  const qs = part.questions.map((item,i)=>{
+    const opts = item.opts.map((o,j)=>`
+      <label class="opt" data-opt="${j}">
+        <input type="radio" name="${part.id}-q${i}" id="${part.id}-q${i}-o${j}" value="${j}">
+        <span class="letter">${LETTERS[j]}.</span>
+        <span class="body">${esc(o)}</span>
+      </label>`).join("");
+    return `
+    <article class="q" data-q="${i}">
+      <div class="qhead">
+        <span class="qnum">${i+1}</span>
+        <p class="qtext">${esc(item.q)}</p>
+      </div>
+      <fieldset class="opts">${opts}</fieldset>
+      <div class="exp" hidden>
+        <p class="tagline">Đáp án đúng: ${LETTERS[item.ans]}</p>
+        <blockquote>“${esc(item.quote)}”</blockquote>
+        <p class="vi">${esc(item.vi)}</p>
+        <p class="why">${item.why}</p>
+      </div>
+      ${item.flag ? `<div class="flag" hidden><strong>Lưu ý về đáp án</strong><span>${item.flag}</span></div>` : ""}
+    </article>`;
+  }).join("");
+
+  const vocab = part.vocab.map(v=>`<li><b>${v[0]}</b><span>${v[1]}</span></li>`).join("");
+
+  return `
+  <section class="panel" id="panel-${part.id}" role="tabpanel" aria-labelledby="tab-${part.id}" data-part="${part.id}">
+    <div class="wrap">
+      <div class="part-head">
+        <h2>${esc(part.heading)}</h2>
+        <p class="part-sub">${esc(part.sub)}</p>
+      </div>
+
+      <div class="player">
+        <div class="player-top">
+          <span class="player-label">Bài nghe</span>
+          <span class="dur">${part.dur} · ${part.questions.length} câu</span>
+        </div>
+        <audio controls preload="metadata" src="${part.audio}"></audio>
+        <div class="speeds">
+          <span class="cap">Tốc độ</span>
+          <button class="chip" data-rate="0.75" aria-pressed="false">0,75×</button>
+          <button class="chip" data-rate="1" aria-pressed="true">1×</button>
+          <button class="chip" data-rate="1.25" aria-pressed="false">1,25×</button>
+        </div>
+      </div>
+
+      <div class="qlist">${qs}</div>
+
+      <div class="score" hidden></div>
+
+      <div class="actions">
+        <button class="btn primary" data-act="submit">Nộp bài</button>
+        <button class="btn" data-act="reset">Làm lại</button>
+        <span class="progress">0/${part.questions.length} câu đã chọn</span>
+      </div>
+
+      <details class="script-drawer">
+        <summary>Transcript — ${esc(part.name)}</summary>
+        <div class="drawer-body script">${scriptHTML(part)}</div>
+      </details>
+
+      <details>
+        <summary>Từ vựng &amp; cách diễn đạt cần nhớ</summary>
+        <div class="drawer-body"><ul class="vocab">${vocab}</ul></div>
+      </details>
+    </div>
+  </section>`;
+}
+
+document.getElementById("main").innerHTML = DATA.map(panelHTML).join("");
+
+/* ---------- tabs ---------- */
+const tabs = [...document.querySelectorAll(".tab")];
+const panels = [...document.querySelectorAll(".panel")];
+function show(id){
+  tabs.forEach(t=>t.setAttribute("aria-selected", String(t.id==="tab-"+id)));
+  panels.forEach(p=>{ p.hidden = p.id !== "panel-"+id; });
+  const a = document.querySelector("#panel-"+id+" audio");
+  panels.forEach(p=>{ const au=p.querySelector("audio"); if(au && au!==a) au.pause(); });
+  if(location.hash.slice(1)!==id) location.hash = id;
+}
+tabs.forEach(t=>t.addEventListener("click",()=>show(t.id.replace("tab-",""))));
+const valid = DATA.map(d=>d.id);
+show(valid.includes(location.hash.slice(1)) ? location.hash.slice(1) : "p1");
+window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(valid.includes(h)) show(h); });
+
+/* ---------- per-part logic ---------- */
+DATA.forEach(part=>{
+  const panel = document.getElementById("panel-"+part.id);
+  const audio = panel.querySelector("audio");
+  const qEls  = [...panel.querySelectorAll(".q")];
+  const prog  = panel.querySelector(".progress");
+  const score = panel.querySelector(".score");
+  const key   = "vstep01-"+part.id;
+  let graded  = false;
+
+  panel.querySelectorAll(".chip").forEach(chip=>{
+    chip.addEventListener("click",()=>{
+      const r = parseFloat(chip.dataset.rate);
+      audio.playbackRate = r;
+      panel.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", String(c===chip)));
+    });
+  });
+
+  const picked = () => qEls.map(el=>{
+    const c = el.querySelector("input:checked");
+    return c ? Number(c.value) : null;
+  });
+
+  function updateProgress(){
+    const n = picked().filter(v=>v!==null).length;
+    prog.textContent = `${n}/${part.questions.length} câu đã chọn`;
+  }
+
+  function grade(){
+    graded = true;
+    const ans = picked();
+    let right = 0;
+    qEls.forEach((el,i)=>{
+      const correct = part.questions[i].ans;
+      const chosen  = ans[i];
+      el.classList.add("graded");
+      el.classList.toggle("is-right", chosen===correct);
+      el.classList.toggle("is-wrong", chosen!==correct);
+      if(chosen===correct) right++;
+      el.querySelectorAll(".opt").forEach((opt,j)=>{
+        opt.classList.toggle("mark-correct", j===correct);
+        opt.classList.toggle("mark-chosen-wrong", j===chosen && chosen!==correct);
+      });
+      el.querySelectorAll("input").forEach(inp=>{ inp.disabled = true; });
+      el.querySelector(".exp").hidden = false;
+      const flag = el.querySelector(".flag");
+      if(flag) flag.hidden = false;
+    });
+    const total = part.questions.length;
+    const pct = Math.round(right/total*100);
+    let msg;
+    if(pct===100)      msg = "Trọn vẹn. Nghe lại một lượt cùng transcript để nhớ cách diễn đạt.";
+    else if(pct>=70)   msg = "Khá tốt. Xem lại câu sai, tìm đúng chỗ đó trong transcript rồi nghe lại riêng đoạn ấy.";
+    else if(pct>=40)   msg = "Nghe lại ở tốc độ 0,75×, vừa nghe vừa mở transcript, sau đó thử lại không nhìn.";
+    else               msg = "Mở transcript đọc trước, tra từ vựng bên dưới, rồi nghe lại từ đầu. Hiểu trước, tốc độ sau.";
+    score.hidden = false;
+    score.innerHTML = `<span class="big">${right}/${total}</span><span class="msg">${msg}</span>`;
+    score.scrollIntoView({behavior:"smooth",block:"nearest"});
+    store.set(key,{answers:ans,graded:true});
+  }
+
+  function reset(){
+    graded = false;
+    qEls.forEach(el=>{
+      el.classList.remove("graded","is-right","is-wrong");
+      el.querySelectorAll("input").forEach(inp=>{ inp.disabled=false; inp.checked=false; });
+      el.querySelectorAll(".opt").forEach(o=>o.classList.remove("mark-correct","mark-chosen-wrong"));
+      el.querySelector(".exp").hidden = true;
+      const flag = el.querySelector(".flag");
+      if(flag) flag.hidden = true;
+    });
+    score.hidden = true;
+    store.del(key);
+    updateProgress();
+  }
+
+  panel.addEventListener("change",e=>{
+    if(e.target.matches("input[type=radio]") && !graded){
+      updateProgress();
+      store.set(key,{answers:picked(),graded:false});
+    }
+  });
+  panel.querySelector('[data-act="submit"]').addEventListener("click",()=>{ if(!graded) grade(); });
+  panel.querySelector('[data-act="reset"]').addEventListener("click",reset);
+
+  const saved = store.get(key);
+  if(saved && Array.isArray(saved.answers)){
+    saved.answers.forEach((v,i)=>{
+      if(v!==null && v!==undefined){
+        const inp = panel.querySelector(`#${part.id}-q${i}-o${v}`);
+        if(inp) inp.checked = true;
+      }
+    });
+    if(saved.graded) grade(); else updateProgress();
+  } else {
+    updateProgress();
+  }
+});
+</script>
+
+</body>
+</html>
