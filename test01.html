@@ -87,6 +87,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* ---------- header ---------- */
 .masthead{background:var(--surface);border-bottom:1px solid var(--line)}
 .masthead .wrap{padding-block:28px 22px}
+.backlink{margin:0 0 14px;font-size:13.5px}
+.backlink a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:1px}
+.backlink a:hover{color:var(--accent);border-bottom-color:var(--accent)}
 .eyebrow{
   font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
   color:var(--accent);margin:0 0 8px;
@@ -231,6 +234,7 @@ summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 <body>
 <header class="masthead">
   <div class="wrap">
+    <p class="backlink"><a href="./">&larr; Mục lục bài nghe</a></p>
     <p class="eyebrow">VSTEP B1–B2–C1 · Listening</p>
     <h1>Luyện nghe VSTEP — Test 01</h1>
     <p class="lede">Nghe audio, chọn đáp án, nộp bài để xem điểm. Sau khi nộp, mỗi câu có đáp án đúng, câu trích trong bài nghe và giải thích tiếng Việt. Transcript đầy đủ nằm ở cuối mỗi phần.</p>
